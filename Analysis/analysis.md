@@ -36,7 +36,6 @@ Each model was evaluated using key performance metrics:
     Addressing class imbalance with SMOTE or class weighting.
     Adding more patient-specific features or time-based information.
 
-
 ## Conclusion
 Among the models tested, XGBoost performed the best overall, providing a good balance of accuracy, reliability, and predictive power. Despite a modest accuracy (~65%), it’s considered acceptable for medical datasets where perfect prediction is less realistic, and model interpretability matters most.
 
