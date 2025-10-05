@@ -1,41 +1,57 @@
-#  Health Readmission Model Analysis
+# Diabetic Readmission Prediction - Results Summary
 
-## Objective
-The goal of this assessment is to build and compare multiple machine learning models to predict patient readmission based on the UCI Diabetic Readmission Dataset. Models include:
-- Random Forest
-- XGBoost
-- Support Vector Machine (SVM)
+# Model Performance Comparison
 
-## Model Evaluation Metrics
-Each model was evaluated using key performance metrics:
- Accuracy: Overall correctness of predictions  
- Precision: Correct positive predictions over total predicted positives  
- Recall/Sensitivity: Correct positive predictions over total actual positives  
- F1 Score: Balance between Precision and Recall  
- AUC (Area Under Curve): Model’s ability to distinguish between classes  
- Brier Score: Measures the accuracy of probabilistic predictions (lower is better)
+| Model | AUC | Accuracy | F1-Score | Brier Score | Status |
+|-------|-----|----------|----------|-------------|--------|
+| **XGBoost** | 0.681 | 0.889 | 0.032 | 0.094 | **Best Performer** |
+| **Random Forest** | 0.636 | 0.889 | 0.015 | 0.096 | Competitive |
+| **SVM (subset)** | 0.631 | 0.888 | 0.000 | 0.097 | Limited by sample size |
 
-## Updated Model Comparison Table
+# Key Results
 
-| Model         | Accuracy  | Precision  | Recall/Sensitivity | F1 Score | AUC     | Brier  |
-|---------------|-----------|------------|--------------------|----------|---------|------- |
-| XGBoost       | 0.6460    | 0.6316     | 0.5567             | 0.5918   | 0.7031  | 0.2169 |
-| Random Forest | 0.6447    | 0.6394     | 0.5256             | 0.5769   | 0.6939  | 0.2207 |
-| SVM           | 0.6245    | 0.6237     | 0.4407             | 0.5164   | 0.6533  | 0.2298 |
+# Best Performing Model
+- **XGBoost** achieved highest AUC (0.681) and F1-score (0.032)
+- All models showed similar accuracy (~88.9%)
 
+# Critical Challenge
+- **Severe class imbalance** affecting minority class prediction
+- Very low F1-scores despite high accuracy
+- SVM failed to predict any readmission cases (F1: 0.000)
 
-## Analysis and Observations
-1. XGBoost achieved the best overall performance with:
-    Highest **AUC (0.7031)** → best at distinguishing between readmitted and non-readmitted patients.  
-    Lowest **Brier Score (0.2169)** → most reliable probability estimates.
-2. Random Forest performed closely with slightly better precision, showing it’s conservative in predicting readmissions.
-3. SVM showed lower recall and AUC, indicating it missed more true positives compared to tree-based models.
-4. A 65% accuracy is reasonable for healthcare prediction tasks, especially since medical readmission data is often imbalanced and complex.
-5. Future improvements may include:
-    Hyperparameter tuning with GridSearchCV or Optuna.
-    Addressing class imbalance with SMOTE or class weighting.
-    Adding more patient-specific features or time-based information.
+# Successful Implementation
+- **Feature selection** reduced dimensions to 1,185 important features
+- **Model calibration** applied using isotonic regression
+- **Probability calibration** improved reliability for all models
 
-## Conclusion
-Among the models tested, XGBoost performed the best overall, providing a good balance of accuracy, reliability, and predictive power. Despite a modest accuracy (~65%), it’s considered acceptable for medical datasets where perfect prediction is less realistic, and model interpretability matters most.
+# Performance Metrics Analysis
 
+# AUC-ROC (Discriminative Power)
+1. XGBoost: 0.681
+2. Random Forest: 0.636  
+3. SVM: 0.631
+
+# F1-Score (Minority Class Performance)
+1. XGBoost: 0.032
+2. Random Forest: 0.015
+3. SVM: 0.000
+
+# Probability Calibration
+- All models show similar Brier scores (~0.095)
+- XGBoost has slightly better calibration (0.094)
+
+# Technical Specifications
+
+# Data Processing
+- **Original**: 101,766 samples × 48 features
+- **Final**: 1,185 selected features after preprocessing
+- **Target**: Binary classification (30-day readmission)
+
+# Model Configuration
+- **XGBoost/RF**: 50 estimators, full dataset training
+- **SVM**: RBF kernel, 5,000 sample subset
+- **Calibration**: Isotonic regression with 5-fold CV (3-fold for SVM)
+
+# Conclusion
+
+XGBoost demonstrates the best predictive capability for diabetic readmission prediction, though all models are significantly impacted by class imbalance. The implemented feature selection and probability calibration provide reliable foundations for clinical risk assessment.
