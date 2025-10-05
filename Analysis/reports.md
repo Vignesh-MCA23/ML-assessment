@@ -36,7 +36,7 @@
 - **Calibration curves** demonstrated improved probability reliability across all models
 
 
-## 🎯 **Key Findings & Conclusion**
+## **Key Findings & Conclusion**
 - **XGBoost demonstrated the best overall performance** with balanced metrics across AUC (0.661) and F1-score (0.257)
 - **Class imbalance handling was critical** - XGBoost's scale_pos_weight parameter effectively addressed the 11% readmission rate
 - **Time-based validation provided realistic performance estimates** for clinical deployment scenarios
